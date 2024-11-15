@@ -19,6 +19,10 @@ export interface ChatCompletionInput {
 	 */
 	frequency_penalty?: number;
 	/**
+	 * A guideline to be used in the chat_template
+	 */
+	guideline?: string;
+	/**
 	 * UNUSED
 	 * Modify the likelihood of specified tokens appearing in the completion. Accepts a JSON
 	 * object that maps tokens
@@ -154,10 +158,20 @@ export interface ChatCompletionInputStreamOptions {
 	[property: string]: unknown;
 }
 
-export type ChatCompletionInputTool = ChatCompletionInputToolType | string;
+/**
+ * Controls which (if any) tool is called by the model.
+ */
+export type ChatCompletionInputTool = ChatCompletionInputToolChoiceEnum | ChatCompletionInputToolChoiceObject;
 
-export interface ChatCompletionInputToolType {
-	function?: ChatCompletionInputFunctionName;
+/**
+ * Means the model can pick between generating a message or calling one or more tools.
+ *
+ * Means the model will not call any tool and instead generates a message.
+ */
+export type ChatCompletionInputToolChoiceEnum = "auto" | "none";
+
+export interface ChatCompletionInputToolChoiceObject {
+	function: ChatCompletionInputFunctionName;
 	[property: string]: unknown;
 }
 
